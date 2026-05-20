@@ -1,8 +1,9 @@
 //! OwnerSignal contract for privileged PersonaRouter channel policy.
 //!
 //! Ordinary router observation traffic lives in `signal-persona-router`.
-//! This crate carries owner-only channel authority orders for
-//! `persona-router`.
+//! This crate carries Orchestrate-to-Router owner-only channel
+//! authority orders. Mind-level decisions reach Router through
+//! Orchestrate, not by calling this contract directly.
 
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode, NotaEnum, NotaRecord, NotaTransparent};
 use rkyv::{Archive, Deserialize as RkyvDeserialize, Serialize as RkyvSerialize};

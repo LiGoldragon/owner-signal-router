@@ -9,6 +9,10 @@
 `owner-signal-persona-router` is the policy signal for
 PersonaRouter channel authority. It carries owner-only orders that
 grant, extend, revoke, or deny channel authority in the router.
+The caller is PersonaOrchestrate, because Orchestrate owns Router in
+the authority graph. Mind decides whether channel policy should
+change, then orders Orchestrate through `owner-signal-persona-orchestrate`;
+Orchestrate enacts that decision here.
 
 Ordinary router observation traffic stays in `signal-persona-router`.
 Router-to-Mind adjudication observation stays in the Mind working
@@ -25,6 +29,12 @@ The initial surface is deliberately small:
   grant.
 
 ## 1 · Contract Surface
+
+| Side | Component |
+|---|---|
+| Request producer | `persona-orchestrate` owner-signal actor. |
+| Request consumer | `persona-router` owner-signal actor. |
+| Decision source upstream | `persona-mind`, through `owner-signal-persona-orchestrate`. |
 
 | Operation | Projected Sema class | Meaning |
 |---|---|---|
@@ -73,6 +83,9 @@ This repo does not own:
 
 - `persona-router` daemon actors;
 - router durable grant tables;
+- Mind's channel-policy decisions;
+- Orchestrate's translation from Mind-level decision to Router-level
+  channel order;
 - bootstrap policy files;
 - ordinary router observation traffic in `signal-persona-router`;
 - Mind graph, work graph, or adjudication observation records in
@@ -83,6 +96,8 @@ This repo does not own:
 
 - The contract exposes owner-only router channel-policy operations,
   not ordinary router observation queries.
+- The intended caller is Orchestrate, not Mind; Mind reaches Router
+  channel policy by ordering Orchestrate first.
 - Grant, extension, revocation, and denial are owner operations on
   this contract, not message kinds in the routed-channel vocabulary.
 - Every operation root is a contract-local verb in verb form.
@@ -120,4 +135,3 @@ tests/round_trip.rs   frame round trips and contract-local operation witnesses
 - `../signal-sema/ARCHITECTURE.md`
 - `~/primary/skills/contract-repo.md`
 - `~/primary/skills/component-triad.md`
-

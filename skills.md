@@ -16,4 +16,5 @@ Before editing, read:
 This repo owns only the owner-only PersonaRouter channel-policy
 signal vocabulary. It contains no daemon, no database tables, no
 actor runtime, no CLI parser, and no policy evaluation logic.
-
+The caller is PersonaOrchestrate; do not document or implement Mind as
+calling this contract directly.
