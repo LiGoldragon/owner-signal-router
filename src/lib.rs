@@ -103,8 +103,8 @@ impl NotaDecode for ChannelEndpoint {
                 decoder.expect_record_end()?;
                 Ok(Self::External(connection))
             }
-            other => Err(nota_codec::Error::UnknownKindForVerb {
-                verb: "ChannelEndpoint",
+            other => Err(nota_codec::Error::UnknownVariant {
+                enum_name: "ChannelEndpoint",
                 got: other.to_string(),
             }),
         }
@@ -193,8 +193,8 @@ impl NotaDecode for ChannelDuration {
                 decoder.expect_record_end()?;
                 Ok(Self::TimeBound(timestamp))
             }
-            other => Err(nota_codec::Error::UnknownKindForVerb {
-                verb: "ChannelDuration",
+            other => Err(nota_codec::Error::UnknownVariant {
+                enum_name: "ChannelDuration",
                 got: other.to_string(),
             }),
         }
