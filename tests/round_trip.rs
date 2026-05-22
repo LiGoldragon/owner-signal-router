@@ -3,8 +3,8 @@ use owner_signal_persona_router::{
     AdjudicationDenial, AdjudicationDenied, AdjudicationRequestIdentifier, ChannelDuration,
     ChannelEndpoint, ChannelExtended, ChannelExtension, ChannelGrant, ChannelGranted,
     ChannelMessageKind, ChannelOrderRejected, ChannelOrderRejectionReason, ChannelRevocation,
-    ChannelRevoked, Frame, FrameBody, OperationKind, OwnerRouterChannelRequest, OwnerRouterReply,
-    OwnerRouterRequest, RequestUnimplemented, TextBody, TimestampNanoseconds, UnimplementedReason,
+    ChannelRevoked, Frame, FrameBody, Operation, OperationKind, OwnerRouterReply, Request,
+    RequestUnimplemented, TextBody, TimestampNanoseconds, UnimplementedReason,
 };
 use signal_frame::{
     ExchangeIdentifier, ExchangeLane, LaneSequence, NonEmpty, Reply, RequestPayload, SessionEpoch,
@@ -48,7 +48,7 @@ fn grant() -> ChannelGrant {
     }
 }
 
-fn round_trip_request(request: OwnerRouterRequest) -> OwnerRouterRequest {
+fn round_trip_request(request: Operation) -> Operation {
     let frame = Frame::new(FrameBody::Request {
         exchange: exchange(),
         request: request.into_request(),
@@ -97,18 +97,18 @@ where
 #[test]
 fn owner_router_requests_round_trip() {
     let requests = vec![
-        OwnerRouterRequest::Grant(grant()),
-        OwnerRouterRequest::Extend(ChannelExtension {
+        Operation::Grant(grant()),
+        Operation::Extend(ChannelExtension {
             channel: channel(),
             duration: ChannelDuration::TimeBound(TimestampNanoseconds::new(
                 1_730_000_000_000_000_000,
             )),
         }),
-        OwnerRouterRequest::Revoke(ChannelRevocation {
+        Operation::Revoke(ChannelRevocation {
             channel: channel(),
             reason: TextBody::new("operator closed the path"),
         }),
-        OwnerRouterRequest::Deny(AdjudicationDenial {
+        Operation::Deny(AdjudicationDenial {
             request: adjudication_request(),
             reason: TextBody::new("destination unavailable"),
         }),
@@ -145,7 +145,7 @@ fn owner_router_replies_round_trip() {
 
 #[test]
 fn owner_router_operations_encode_as_contract_local_nota_heads() {
-    let operation = OwnerRouterRequest::Grant(grant());
+    let operation = Operation::Grant(grant());
     let mut encoder = Encoder::new();
     operation
         .into_request()
@@ -162,33 +162,30 @@ fn owner_router_operations_encode_as_contract_local_nota_heads() {
     assert!(!text.contains("Assert"));
 
     let mut decoder = Decoder::new(&text);
-    let decoded = OwnerRouterChannelRequest::decode(&mut decoder).expect("decode");
-    assert_eq!(
-        decoded.payloads().head().operation_kind(),
-        OperationKind::Grant
-    );
+    let decoded = Request::decode(&mut decoder).expect("decode");
+    assert_eq!(decoded.payloads().head().kind(), OperationKind::Grant);
 }
 
 #[test]
 fn owner_router_request_exposes_contract_owned_operation_kind() {
     let cases = vec![
-        (OwnerRouterRequest::Grant(grant()), OperationKind::Grant),
+        (Operation::Grant(grant()), OperationKind::Grant),
         (
-            OwnerRouterRequest::Extend(ChannelExtension {
+            Operation::Extend(ChannelExtension {
                 channel: channel(),
                 duration: ChannelDuration::OneShot,
             }),
             OperationKind::Extend,
         ),
         (
-            OwnerRouterRequest::Revoke(ChannelRevocation {
+            Operation::Revoke(ChannelRevocation {
                 channel: channel(),
                 reason: TextBody::new("operator closed the path"),
             }),
             OperationKind::Revoke,
         ),
         (
-            OwnerRouterRequest::Deny(AdjudicationDenial {
+            Operation::Deny(AdjudicationDenial {
                 request: adjudication_request(),
                 reason: TextBody::new("destination unavailable"),
             }),
@@ -197,7 +194,7 @@ fn owner_router_request_exposes_contract_owned_operation_kind() {
     ];
 
     for (request, operation) in cases {
-        assert_eq!(request.operation_kind(), operation);
+        assert_eq!(request.kind(), operation);
     }
 }
 

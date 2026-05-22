@@ -267,16 +267,6 @@ pub enum ChannelOrderRejectionReason {
 #[derive(
     Archive, RkyvSerialize, RkyvDeserialize, NotaEnum, Debug, Clone, Copy, PartialEq, Eq, Hash,
 )]
-pub enum OperationKind {
-    Grant,
-    Extend,
-    Revoke,
-    Deny,
-}
-
-#[derive(
-    Archive, RkyvSerialize, RkyvDeserialize, NotaEnum, Debug, Clone, Copy, PartialEq, Eq, Hash,
-)]
 pub enum UnimplementedReason {
     NotBuiltYet,
     DependencyNotReady,
@@ -306,80 +296,26 @@ signal_channel! {
     }
 }
 
-pub type OwnerRouterRequest = OwnerRouterOperation;
-pub type Frame = OwnerRouterFrame;
-pub type FrameBody = OwnerRouterFrameBody;
-pub type ChannelRequest = OwnerRouterChannelRequest;
-pub type ChannelReply = OwnerRouterChannelReply;
-pub type RequestBuilder = OwnerRouterRequestBuilder;
-
-impl OwnerRouterOperation {
-    pub fn operation_kind(&self) -> OperationKind {
-        match self {
-            Self::Grant(_) => OperationKind::Grant,
-            Self::Extend(_) => OperationKind::Extend,
-            Self::Revoke(_) => OperationKind::Revoke,
-            Self::Deny(_) => OperationKind::Deny,
-        }
-    }
-}
-
-impl From<ChannelGrant> for OwnerRouterRequest {
+impl From<ChannelGrant> for Operation {
     fn from(payload: ChannelGrant) -> Self {
         Self::Grant(payload)
     }
 }
 
-impl From<ChannelExtension> for OwnerRouterRequest {
+impl From<ChannelExtension> for Operation {
     fn from(payload: ChannelExtension) -> Self {
         Self::Extend(payload)
     }
 }
 
-impl From<ChannelRevocation> for OwnerRouterRequest {
+impl From<ChannelRevocation> for Operation {
     fn from(payload: ChannelRevocation) -> Self {
         Self::Revoke(payload)
     }
 }
 
-impl From<AdjudicationDenial> for OwnerRouterRequest {
+impl From<AdjudicationDenial> for Operation {
     fn from(payload: AdjudicationDenial) -> Self {
         Self::Deny(payload)
-    }
-}
-
-impl From<ChannelGranted> for OwnerRouterReply {
-    fn from(payload: ChannelGranted) -> Self {
-        Self::ChannelGranted(payload)
-    }
-}
-
-impl From<ChannelExtended> for OwnerRouterReply {
-    fn from(payload: ChannelExtended) -> Self {
-        Self::ChannelExtended(payload)
-    }
-}
-
-impl From<ChannelRevoked> for OwnerRouterReply {
-    fn from(payload: ChannelRevoked) -> Self {
-        Self::ChannelRevoked(payload)
-    }
-}
-
-impl From<AdjudicationDenied> for OwnerRouterReply {
-    fn from(payload: AdjudicationDenied) -> Self {
-        Self::AdjudicationDenied(payload)
-    }
-}
-
-impl From<ChannelOrderRejected> for OwnerRouterReply {
-    fn from(payload: ChannelOrderRejected) -> Self {
-        Self::ChannelOrderRejected(payload)
-    }
-}
-
-impl From<RequestUnimplemented> for OwnerRouterReply {
-    fn from(payload: RequestUnimplemented) -> Self {
-        Self::RequestUnimplemented(payload)
     }
 }
