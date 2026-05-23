@@ -8,7 +8,7 @@
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode, NotaEnum, NotaRecord, NotaTransparent};
 use rkyv::{Archive, Deserialize as RkyvDeserialize, Serialize as RkyvSerialize};
 use signal_frame::signal_channel;
-use signal_persona_auth::{ChannelId, ComponentName, ConnectionClass};
+use signal_persona_origin::{ChannelIdentifier, ComponentName, ConnectionClass};
 
 #[derive(
     Archive, RkyvSerialize, RkyvDeserialize, NotaTransparent, Debug, Clone, PartialEq, Eq, Hash,
@@ -211,13 +211,13 @@ pub struct ChannelGrant {
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]
 pub struct ChannelExtension {
-    pub channel: ChannelId,
+    pub channel: ChannelIdentifier,
     pub duration: ChannelDuration,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]
 pub struct ChannelRevocation {
-    pub channel: ChannelId,
+    pub channel: ChannelIdentifier,
     pub reason: TextBody,
 }
 
@@ -229,17 +229,17 @@ pub struct AdjudicationDenial {
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]
 pub struct ChannelGranted {
-    pub channel: ChannelId,
+    pub channel: ChannelIdentifier,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]
 pub struct ChannelExtended {
-    pub channel: ChannelId,
+    pub channel: ChannelIdentifier,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]
 pub struct ChannelRevoked {
-    pub channel: ChannelId,
+    pub channel: ChannelIdentifier,
 }
 
 #[derive(Archive, RkyvSerialize, RkyvDeserialize, NotaRecord, Debug, Clone, PartialEq, Eq)]

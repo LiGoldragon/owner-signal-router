@@ -10,7 +10,7 @@ use signal_frame::{
     ExchangeIdentifier, ExchangeLane, LaneSequence, NonEmpty, Reply, RequestPayload, SessionEpoch,
     SubReply,
 };
-use signal_persona_auth::{ChannelId, ComponentName, ConnectionClass};
+use signal_persona_origin::{ChannelIdentifier, ComponentName, ConnectionClass};
 
 fn exchange() -> ExchangeIdentifier {
     ExchangeIdentifier::new(
@@ -20,8 +20,8 @@ fn exchange() -> ExchangeIdentifier {
     )
 }
 
-fn channel() -> ChannelId {
-    ChannelId::new("channel-aab")
+fn channel() -> ChannelIdentifier {
+    ChannelIdentifier::new("channel-aab")
 }
 
 fn adjudication_request() -> AdjudicationRequestIdentifier {

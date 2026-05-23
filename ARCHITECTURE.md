@@ -59,7 +59,7 @@ contract-local operation roots only; there is no public `Mutate` or
 ## 2 · Policy Types
 
 `ChannelEndpoint` names internal component endpoints and external
-connection classes using `signal-persona-auth` vocabulary.
+connection classes using `signal-persona-origin` vocabulary.
 
 `ChannelMessageKind` names route categories that can be covered by a
 grant. Owner-order names such as channel grant, extension, revocation,
