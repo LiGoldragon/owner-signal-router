@@ -1,0 +1,37 @@
+{}
+
+[]
+
+[
+  (Grant [Channel])
+  (Extend [Channel])
+  (Revoke [Channel])
+  (Deny [Adjudication])
+]
+
+[]
+
+{
+  Grant [(Channel Channel)]
+  Extend [(Channel Channel)]
+  Revoke [(Channel Channel)]
+  Deny [(Adjudication Adjudication)]
+  Route (Text)
+  Trace (Identifier)
+  State (Text)
+  Accepted (Identifier)
+  Delivered (Identifier)
+  Failed (Identifier)
+  Channel (Text)
+  Adjudication (Text)
+  Text (String)
+  Identifier (u64)
+  Name (String)
+  Path (String)
+  Status [Concept Active Retired]
+}
+
+[
+  (Version 0 1)
+  (Status Concept)
+]
