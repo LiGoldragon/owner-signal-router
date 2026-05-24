@@ -1,4 +1,4 @@
-# skills — owner-signal-persona-router
+# skills — owner-signal-router
 
 Before editing, read:
 
@@ -9,8 +9,8 @@ Before editing, read:
 - `~/primary/skills/architectural-truth-tests.md`
 - `~/primary/skills/nix-discipline.md`
 - this repo's `ARCHITECTURE.md`
-- `../signal-persona-router/ARCHITECTURE.md`
-- `../persona-router/ARCHITECTURE.md`
+- `../signal-router/ARCHITECTURE.md`
+- `../router/ARCHITECTURE.md`
 - `../signal-persona-mind/ARCHITECTURE.md`
 
 This repo owns only the owner-only PersonaRouter channel-policy
