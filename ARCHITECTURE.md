@@ -1,4 +1,4 @@
-# owner-signal-persona-router — architecture
+# owner-signal-router — architecture
 
 *Owner-only Signal contract for PersonaRouter channel policy.*
 
@@ -6,7 +6,7 @@
 
 ## 0 · TL;DR
 
-`owner-signal-persona-router` is the policy signal for
+`owner-signal-router` is the policy signal for
 PersonaRouter channel authority. It carries owner-only orders that
 grant, extend, revoke, or deny channel authority in the router.
 The caller is PersonaOrchestrate, because Orchestrate owns Router in
@@ -14,11 +14,11 @@ the authority graph. Mind decides whether channel policy should
 change, then orders Orchestrate through `owner-signal-persona-orchestrate`;
 Orchestrate enacts that decision here.
 
-Ordinary router observation traffic stays in `signal-persona-router`.
+Ordinary router observation traffic stays in `signal-router`.
 Router-to-Mind adjudication observation stays in the Mind working
 contract until that relation is deliberately moved. Runtime actors,
 policy evaluation, socket binding, durable grant tables, and command
-lowering live in `persona-router`.
+lowering live in `router`.
 
 The initial surface is deliberately small:
 
@@ -33,7 +33,7 @@ The initial surface is deliberately small:
 | Side | Component |
 |---|---|
 | Request producer | `persona-orchestrate` owner-signal actor. |
-| Request consumer | `persona-router` owner-signal actor. |
+| Request consumer | `router` owner-signal actor. |
 | Decision source upstream | `persona-mind`, through `owner-signal-persona-orchestrate`. |
 
 | Operation | Projected Sema class | Meaning |
@@ -82,13 +82,13 @@ This repo owns:
 
 This repo does not own:
 
-- `persona-router` daemon actors;
+- `router` daemon actors;
 - router durable grant tables;
 - Mind's channel-policy decisions;
 - Orchestrate's translation from Mind-level decision to Router-level
   channel order;
 - bootstrap policy files;
-- ordinary router observation traffic in `signal-persona-router`;
+- ordinary router observation traffic in `signal-router`;
 - Mind graph, work graph, or adjudication observation records in
   `signal-persona-mind`;
 - CLI argv parsing or socket permissions.
@@ -130,8 +130,8 @@ tests/round_trip.rs   frame round trips and contract-local operation witnesses
 
 ## See Also
 
-- `../signal-persona-router/ARCHITECTURE.md`
-- `../persona-router/ARCHITECTURE.md`
+- `../signal-router/ARCHITECTURE.md`
+- `../router/ARCHITECTURE.md`
 - `../signal-persona-mind/ARCHITECTURE.md`
 - `../signal-frame/ARCHITECTURE.md`
 - `../signal-sema/ARCHITECTURE.md`

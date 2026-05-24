@@ -1,5 +1,5 @@
 use nota_codec::{Decoder, Encoder, NotaDecode, NotaEncode};
-use owner_signal_persona_router::{
+use owner_signal_router::{
     AdjudicationDenial, AdjudicationDenied, AdjudicationRequestIdentifier, ChannelDuration,
     ChannelEndpoint, ChannelExtended, ChannelExtension, ChannelGrant, ChannelGranted,
     ChannelMessageKind, ChannelOrderRejected, ChannelOrderRejectionReason, ChannelRevocation,

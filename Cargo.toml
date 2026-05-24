@@ -1,15 +1,15 @@
 [package]
-name         = "owner-signal-persona-router"
+name         = "owner-signal-router"
 version      = "0.1.0"
 edition      = "2024"
 rust-version = "1.85"
 license      = "MIT OR Apache-2.0"
-repository   = "https://github.com/LiGoldragon/owner-signal-persona-router"
+repository   = "https://github.com/LiGoldragon/owner-signal-router"
 description  = "OwnerSignal contract for privileged PersonaRouter channel-policy orders."
 publish      = false
 
 [lib]
-name = "owner_signal_persona_router"
+name = "owner_signal_router"
 path = "src/lib.rs"
 
 [dependencies]

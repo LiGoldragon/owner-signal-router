@@ -1,6 +1,6 @@
 //! OwnerSignal contract for privileged PersonaRouter channel policy.
 //!
-//! Ordinary router observation traffic lives in `signal-persona-router`.
+//! Ordinary router observation traffic lives in `signal-router`.
 //! This crate carries Orchestrate-to-Router owner-only channel
 //! authority orders. Mind-level decisions reach Router through
 //! Orchestrate, not by calling this contract directly.
